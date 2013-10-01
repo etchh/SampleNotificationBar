@@ -4,10 +4,15 @@
  */
 package samplenotificationbar.user.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  *
  * @author mostafa
  */
+@Entity
+@Table(name = "user")
 public class User {
     
 }

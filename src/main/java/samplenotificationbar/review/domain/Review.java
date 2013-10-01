@@ -4,10 +4,15 @@
  */
 package samplenotificationbar.review.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  *
  * @author mostafa
  */
+@Entity
+@Table(name = "review")
 public class Review {
     
 }

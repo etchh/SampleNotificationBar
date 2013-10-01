@@ -4,10 +4,21 @@
  */
 package samplenotificationbar.product.domain;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 /**
  *
  * @author mostafa
  */
+
+@Entity
+@Table(name = "product")
 public class Product {
+    
+    Integer productId;
+    public Product(){
+        
+    }
     
 }
