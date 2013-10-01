@@ -31,7 +31,7 @@ public class Review {
     Integer reviewId;
     String comment;
     Date commentDate;
-    Set<User> users = new HashSet<User>();
+    User user;
     Product product;
 
     public Review() {
@@ -41,6 +41,13 @@ public class Review {
         this.reviewId = reviewId;
         this.comment = comment;
         this.commentDate = commentDate;
+    }
+    public Review(Integer reviewId, String comment, Date commentDate,User user,Product product) {
+        this.reviewId = reviewId;
+        this.comment = comment;
+        this.commentDate = commentDate;
+        this.user = user;
+        this.product = product;
     }
 
     @Id
@@ -84,12 +91,12 @@ public class Review {
     
     @ForeignKey(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_d", nullable = true)
-    public Set<User> getUsers() {
-        return this.users;
+    @JoinColumn(name = "user_id", nullable = true)
+    public User getUser() {
+        return this.user;
     }
 
-    public void setShippingRegion(Set<User> users) {
-        this.users = users;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

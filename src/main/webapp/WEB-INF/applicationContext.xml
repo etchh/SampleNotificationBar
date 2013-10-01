@@ -30,10 +30,7 @@
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
     
-    
-    <!--  persistance exception  -->
-    <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
-    
+   
     <!--  annotation scanner   -->
     <mvc:annotation-driven />
     

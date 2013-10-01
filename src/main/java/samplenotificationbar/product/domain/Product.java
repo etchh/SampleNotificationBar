@@ -41,6 +41,12 @@ public class Product {
         this.name = name;
         this.price = price;
     }
+    public Product(Integer productId , String name , Double price , Set<Review> reviews){
+        this.productId = productId;
+        this.name = name;
+        this.price = price;
+        this.reviews = reviews;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -62,7 +68,7 @@ public class Product {
         this.name = name;
     }
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "price", nullable = false)
     public Double getPrice() {
         return price;
     }

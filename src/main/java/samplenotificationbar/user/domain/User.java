@@ -41,6 +41,12 @@ public class User {
         this.name = name;
         this.email = email;
     }
+    public User(Integer userId, String name, String email,Set<Review> reviews) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
+        this.reviews = reviews;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
