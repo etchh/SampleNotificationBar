@@ -33,6 +33,7 @@ public class Product {
     Double price;
     Set<Review> reviews = new HashSet<Review>();
     
+    
     public Product(){
         
     }
