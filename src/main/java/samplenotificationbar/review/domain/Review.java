@@ -4,7 +4,7 @@
  */
 package samplenotificationbar.review.domain;
 
-import java.sql.Date;
+import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,9 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
 import org.hibernate.annotations.ForeignKey;
-import org.springframework.context.ApplicationEventPublisher;
-import org.springframework.context.ApplicationEventPublisherAware;
 import samplenotificationbar.product.domain.Product;
 import samplenotificationbar.user.domain.User;
 
@@ -26,14 +25,14 @@ import samplenotificationbar.user.domain.User;
  */
 @Entity
 @Table(name = "review")
-public class Review implements ApplicationEventPublisherAware {
+public class Review {
 
     Integer reviewId;
     String comment;
     Date commentDate;
     User user;
     Product product;
-    private ApplicationEventPublisher applicationEventPublisher = null;
+    
 
     public Review() {
     }
@@ -52,10 +51,7 @@ public class Review implements ApplicationEventPublisherAware {
         this.product = product;
     }
 
-    public void setApplicationEventPublisher(
-            ApplicationEventPublisher applicationEventPublisher) {
-        this.applicationEventPublisher = applicationEventPublisher;
-    }
+    
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -78,6 +74,7 @@ public class Review implements ApplicationEventPublisherAware {
     }
 
     @Column(name = "comment_date", nullable = false)
+    @Temporal(javax.persistence.TemporalType.DATE)
     public Date getCommentDate() {
         return commentDate;
     }

@@ -4,39 +4,55 @@
  */
 package samplenotificationbar.review.controller;
 
+import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import samplenotificationbar.product.service.ProductService;
 import samplenotificationbar.review.domain.Review;
-import samplenotificationbar.review.event.AddReviewEvent;
+import samplenotificationbar.review.service.ReviewService;
+import samplenotificationbar.user.service.UserService;
 
 /**
  *
  * @author mostafa
  */
 @Controller
+@RequestMapping("/reviews")
 public class ReviewsController {
     
 
+    ReviewService reviewService;
+    ProductService productService;
+    UserService userService;
+    @Autowired
+    public void setReviewService(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
+
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
     
     
-    
-    
-    public void notifyObservers(){
+    @RequestMapping("/reviewNotifier.htm")
+    public void notifyObservers(@RequestParam("userId")Integer userId , @RequestParam("productId") Integer productId,@RequestParam("comment")String comment,HttpServletRequest request,HttpServletResponse response){
         Review review = new Review();
-        review.setApplicationEventPublisher( new ApplicationEventPublisher() {
-            
-            public void publishEvent(AddReviewEvent ae) {
-                System.out.println("new review has been added!");
-            }
-
-            @Override
-            public void publishEvent(ApplicationEvent ae) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-        });
+        
+        review.setComment(comment);
+        review.setCommentDate(new Date());
+        review.setProduct(productService.getProduct(productId));
+        review.setUser(userService.getUser(userId));
+        
+        reviewService.saveReview(review);
         
     }
     

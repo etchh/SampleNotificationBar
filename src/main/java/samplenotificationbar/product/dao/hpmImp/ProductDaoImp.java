@@ -5,6 +5,7 @@
 package samplenotificationbar.product.dao.hpmImp;
 
 import java.util.List;
+import org.springframework.stereotype.Repository;
 import samplenotificationbar.product.dao.ProductDao;
 import samplenotificationbar.product.domain.Product;
 import samplenotificationbar.util.dao.GenericDao;
@@ -13,6 +14,7 @@ import samplenotificationbar.util.dao.GenericDao;
  *
  * @author mostafa
  */
+@Repository("productDao")
 public class ProductDaoImp extends GenericDao<Product> implements ProductDao{
     
     {

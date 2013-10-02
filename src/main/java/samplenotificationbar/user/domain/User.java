@@ -17,9 +17,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
-import org.springframework.context.ApplicationListener;
 import samplenotificationbar.review.domain.Review;
-import samplenotificationbar.review.event.AddReviewEvent;
 
 /**
  *
@@ -27,7 +25,7 @@ import samplenotificationbar.review.event.AddReviewEvent;
  */
 @Entity
 @Table(name = "user")
-public class User implements ApplicationListener<AddReviewEvent>{
+public class User {
     
     Integer userId;
     String name;
@@ -89,10 +87,7 @@ public class User implements ApplicationListener<AddReviewEvent>{
         this.reviews = reviews;
     }
 
-    @Override
-    public void onApplicationEvent(AddReviewEvent e) {
-        System.out.println("User has added a new review , from User.java!");
-    }
+    
     
     
 }
