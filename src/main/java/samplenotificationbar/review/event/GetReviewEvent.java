@@ -10,13 +10,13 @@ import org.springframework.context.ApplicationEvent;
  *
  * @author mostafa
  */
-
-public class AddReviewEvent extends ApplicationEvent{
-    private static final long serialVersionUID = 5743058377815147529L;
+public class GetReviewEvent extends ApplicationEvent{
+   
+    private static final long serialVersionUID = 5743058377815147530L;
 	
 	private Class event;
         
-	public AddReviewEvent(Object source, Class event) {
+	public GetReviewEvent(Object source, Class event) {
 		super(source);
 		this.event = event;
                 
@@ -25,7 +25,8 @@ public class AddReviewEvent extends ApplicationEvent{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("AddReviewEvent [class=").append(event.getSimpleName()).append("]");
+		builder.append("GetReviewEvent [class=").append(event.getSimpleName()).append("]");
 		return builder.toString();
 	}
+
 }

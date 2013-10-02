@@ -13,12 +13,13 @@ import samplenotificationbar.user.dao.UserDao;
 import samplenotificationbar.user.domain.User;
 import samplenotificationbar.user.service.UserService;
 
+
 /**
  *
  * @author mostafa
  */
 @Service("userService")
-public class UserServiceImp implements UserService , ApplicationListener<AddReviewEvent>{
+public class UserServiceImp implements UserService, ApplicationListener<AddReviewEvent> {
 
     UserDao userDao;
 
@@ -26,7 +27,7 @@ public class UserServiceImp implements UserService , ApplicationListener<AddRevi
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
     }
-    
+
     @Override
     public List<User> getAllUsers() {
         return userDao.getAllUsers();
@@ -39,10 +40,10 @@ public class UserServiceImp implements UserService , ApplicationListener<AddRevi
 
     @Override
     public void onApplicationEvent(AddReviewEvent e) {
-        for(int i = 0 ; i < 10 ; i ++){
+        for (int i = 0; i < 10; i++) {
             System.out.println("I added a review , HAHAHAHAHAAH");
         }
-        
+
     }
-    
+
 }

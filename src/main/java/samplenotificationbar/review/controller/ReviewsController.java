@@ -5,6 +5,7 @@
 package samplenotificationbar.review.controller;
 
 import java.util.Date;
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +45,7 @@ public class ReviewsController {
     
     
     @RequestMapping("/reviewNotifier.htm")
-    public void notifyObservers(@RequestParam("userId")Integer userId , @RequestParam("productId") Integer productId,@RequestParam("comment")String comment,HttpServletRequest request,HttpServletResponse response){
+    public void notifyAllUsers(@RequestParam("userId")Integer userId , @RequestParam("productId") Integer productId,@RequestParam("comment")String comment,HttpServletRequest request,HttpServletResponse response){
         Review review = new Review();
         
         review.setComment(comment);
@@ -53,6 +54,15 @@ public class ReviewsController {
         review.setUser(userService.getUser(userId));
         
         reviewService.saveReview(review);
+        
+    }
+    @RequestMapping("/getRecentReviews.htm")
+    public void getRecentReviews(HttpServletRequest request,HttpServletResponse response){
+        
+        List<Review> reviews = reviewService.getRecentReviews();
+        for(Review review : reviews){
+            System.out.println("New Review from : "+ review.getUser().getName()+" \nOn Product: "+ review.getProduct().getName() + " \nWith comment: "+review.getComment());
+        }
         
     }
     
