@@ -20,6 +20,6 @@ public interface ReviewService {
     
     public void saveReview(Review review);
     
-    public List getRecentReviews();
+//    public List getRecentReviews(Integer productId);
     
 }
