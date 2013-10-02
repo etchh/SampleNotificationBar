@@ -9,5 +9,6 @@
     </head>
     <body>
         any
+        <a href="/products/allProducts.html">Products</a>
     </body>
 </html>

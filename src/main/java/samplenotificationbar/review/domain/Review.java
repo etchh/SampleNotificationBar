@@ -4,6 +4,7 @@
  */
 package samplenotificationbar.review.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
+import javax.persistence.Transient;
 import org.hibernate.annotations.ForeignKey;
 import samplenotificationbar.product.domain.Product;
 import samplenotificationbar.user.domain.User;
@@ -27,12 +29,12 @@ import samplenotificationbar.user.domain.User;
 @Table(name = "review")
 public class Review {
 
-    Integer reviewId;
-    String comment;
-    Date commentDate;
-    User user;
-    Product product;
-    
+    private Integer reviewId;
+    private String comment;
+    private Date commentDate;
+    private User user;
+    private Product product;
+    private String formatedDate;
 
     public Review() {
     }
@@ -51,7 +53,23 @@ public class Review {
         this.product = product;
     }
 
-    
+    /**
+     *
+     * @param formatedDate
+     */
+    public void setFormatedDate(String formatedDate) {
+        this.formatedDate = formatedDate;
+    }
+
+    /**
+     *
+     * @return
+     */
+    @Transient
+    public String getFormatedDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM d, yyyy");
+        return sdf.format(commentDate);
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,7 +113,7 @@ public class Review {
     }
 
     @ForeignKey(name = "user_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", nullable = true)
     public User getUser() {
         return this.user;
@@ -104,8 +122,4 @@ public class Review {
     public void setUser(User user) {
         this.user = user;
     }
-
-    
-    
-    
 }

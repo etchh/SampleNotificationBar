@@ -45,7 +45,7 @@ public class ReviewsController {
     
     
     @RequestMapping("/reviewNotifier.htm")
-    public void notifyAllUsers(@RequestParam("userId")Integer userId , @RequestParam("productId") Integer productId,@RequestParam("comment")String comment,HttpServletRequest request,HttpServletResponse response){
+    public void notifyAllUsers(@RequestParam("userId")Integer userId , @RequestParam("productId") Integer productId,@RequestParam("text")String comment,HttpServletRequest request,HttpServletResponse response){
         Review review = new Review();
         
         review.setComment(comment);
