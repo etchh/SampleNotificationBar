@@ -2,42 +2,43 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package samplenotificationbar.review.dao.hpmImp;
+package samplenotificationbar.review.controller;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEvent;
 import org.springframework.context.ApplicationEventPublisher;
-import samplenotificationbar.review.dao.ReviewDao;
+import org.springframework.stereotype.Controller;
 import samplenotificationbar.review.domain.Review;
 import samplenotificationbar.review.event.AddReviewEvent;
-import samplenotificationbar.util.dao.GenericDao;
 
 /**
  *
  * @author mostafa
  */
-public class ReviewDaoImp extends GenericDao<Review> implements ReviewDao {
+@Controller
+public class ReviewsController {
+    
 
-    {
-        super.setClass(Review.class);
-    }
-
-    @Override
-    public Integer saveReview(Review review) {
-        super.save(review);
-        review.setApplicationEventPublisher(new ApplicationEventPublisher() {
+    
+    
+    
+    
+    public void notifyObservers(){
+        Review review = new Review();
+        review.setApplicationEventPublisher( new ApplicationEventPublisher() {
+            
             public void publishEvent(AddReviewEvent ae) {
-                System.out.println("Add Review is done ReviewDaoImp");
+                System.out.println("new review has been added!");
             }
 
             @Override
             public void publishEvent(ApplicationEvent ae) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
+
         });
-
-        return null;
-
+        
     }
+    
+    
 }

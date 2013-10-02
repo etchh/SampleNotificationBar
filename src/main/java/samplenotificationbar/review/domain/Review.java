@@ -5,8 +5,6 @@
 package samplenotificationbar.review.domain;
 
 import java.sql.Date;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -17,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.ForeignKey;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import samplenotificationbar.product.domain.Product;
 import samplenotificationbar.user.domain.User;
 
@@ -26,13 +26,14 @@ import samplenotificationbar.user.domain.User;
  */
 @Entity
 @Table(name = "review")
-public class Review {
+public class Review implements ApplicationEventPublisherAware {
 
     Integer reviewId;
     String comment;
     Date commentDate;
     User user;
     Product product;
+    private ApplicationEventPublisher applicationEventPublisher = null;
 
     public Review() {
     }
@@ -42,12 +43,18 @@ public class Review {
         this.comment = comment;
         this.commentDate = commentDate;
     }
-    public Review(Integer reviewId, String comment, Date commentDate,User user,Product product) {
+
+    public Review(Integer reviewId, String comment, Date commentDate, User user, Product product) {
         this.reviewId = reviewId;
         this.comment = comment;
         this.commentDate = commentDate;
         this.user = user;
         this.product = product;
+    }
+
+    public void setApplicationEventPublisher(
+            ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 
     @Id
@@ -78,6 +85,7 @@ public class Review {
     public void setCommentDate(Date commentDate) {
         this.commentDate = commentDate;
     }
+
     @ForeignKey(name = "product_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = true)
@@ -88,7 +96,7 @@ public class Review {
     public void setProduct(Product product) {
         this.product = product;
     }
-    
+
     @ForeignKey(name = "user_id")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = true)
@@ -99,4 +107,8 @@ public class Review {
     public void setUser(User user) {
         this.user = user;
     }
+
+    
+    
+    
 }

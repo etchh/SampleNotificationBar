@@ -4,10 +4,12 @@
  */
 package samplenotificationbar.review.dao;
 
+import samplenotificationbar.review.domain.Review;
+
 /**
  *
  * @author mostafa
  */
 public interface ReviewDao {
-    
+    public Integer saveReview(Review review);
 }
