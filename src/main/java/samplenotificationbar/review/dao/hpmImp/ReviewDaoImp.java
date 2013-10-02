@@ -48,7 +48,7 @@ public class ReviewDaoImp extends GenericDao<Review> implements ReviewDao {
 
             @Override
             public List<Review> doInHibernate(Session sn) throws HibernateException, SQLException {
-                Query q = sn.createQuery("from Review where productId = :productId");
+                Query q = sn.createQuery("from Review where product.productId = :productId");
                 q.setInteger("productId", productId);
                 return q.list();
             }
