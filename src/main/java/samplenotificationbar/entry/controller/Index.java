@@ -18,7 +18,7 @@ public class Index {
     
     @RequestMapping({"/index.html", "/", "/home.html"})
     public String home( HttpServletRequest request, HttpServletResponse response) {
-        
+        //ayyad
         return "index";
     }
     
