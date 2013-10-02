@@ -4,6 +4,7 @@
  */
 package samplenotificationbar.review.dao;
 
+import java.util.List;
 import samplenotificationbar.review.domain.Review;
 
 /**
@@ -12,4 +13,8 @@ import samplenotificationbar.review.domain.Review;
  */
 public interface ReviewDao {
     public Integer saveReview(Review review);
+    
+    public List<Review> getUserProductReviews(Integer userId , Integer productId);
+    
+    public List<Review> getAllProductReviews(Integer productId);
 }

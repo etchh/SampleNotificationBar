@@ -4,10 +4,15 @@
  */
 package samplenotificationbar.product.dao;
 
+import java.util.List;
+import samplenotificationbar.product.domain.Product;
+
 /**
  *
  * @author mostafa
  */
 public interface ProductDao {
+    
+    public List<Product> getAllProducts();
     
 }

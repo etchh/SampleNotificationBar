@@ -4,10 +4,15 @@
  */
 package samplenotificationbar.user.dao;
 
+import java.util.List;
+import samplenotificationbar.user.domain.User;
+
 /**
  *
  * @author mostafa
  */
 public interface UserDao {
+    
+    public List<User> getAllUsers();
     
 }

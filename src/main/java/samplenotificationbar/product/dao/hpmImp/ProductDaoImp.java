@@ -4,6 +4,7 @@
  */
 package samplenotificationbar.product.dao.hpmImp;
 
+import java.util.List;
 import samplenotificationbar.product.dao.ProductDao;
 import samplenotificationbar.product.domain.Product;
 import samplenotificationbar.util.dao.GenericDao;
@@ -16,5 +17,10 @@ public class ProductDaoImp extends GenericDao<Product> implements ProductDao{
     
     {
         super.setClass(Product.class);
+    }
+
+    @Override
+    public List<Product> getAllProducts() {
+        return super.findAllByOrder("order by name ASC");
     }
 }
