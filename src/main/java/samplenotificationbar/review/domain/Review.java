@@ -92,7 +92,7 @@ public class Review {
     }
 
     @Column(name = "comment_date", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getCommentDate() {
         return commentDate;
     }
