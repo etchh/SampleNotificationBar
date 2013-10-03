@@ -34,7 +34,7 @@ public class ReviewDaoImp extends GenericDao<Review> implements ReviewDao {
 
             @Override
             public List<Review> doInHibernate(Session sn) throws HibernateException, SQLException {
-                Query q = sn.createQuery("from Review where userId = :userId and productId = :productId");
+                Query q = sn.createQuery("from Review where userId = :userId and productId = :productId order by commentDate desc");
                 q.setInteger("userId", userId);
                 q.setInteger("productId", productId);
                 return q.list();
@@ -48,7 +48,7 @@ public class ReviewDaoImp extends GenericDao<Review> implements ReviewDao {
 
             @Override
             public List<Review> doInHibernate(Session sn) throws HibernateException, SQLException {
-                Query q = sn.createQuery("from Review where product.productId = :productId");
+                Query q = sn.createQuery("from Review where product.productId = :productId order by commentDate desc");
                 q.setInteger("productId", productId);
                 return q.list();
             }
