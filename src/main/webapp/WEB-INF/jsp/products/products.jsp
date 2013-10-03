@@ -111,7 +111,7 @@
                             (month<10 ? '0' : '') + month + ',' +
                             (day<10 ? '0' : '') + day;
 //                        $('#afterReview').addClass('comment-box');
-                        $('.comment-box').first(" \n\
+                        $('.comment-box').prepend(" \n\
                                         <div class='comment'>          \n\
                                         <strong>${user.email}</strong> <span>"+outputDate+"</span><p>"+text+"</p>     \n\
                                                   </div> <div class='clearfix'></div>                   "
