@@ -12,10 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 import samplenotificationbar.product.service.ProductService;
 import samplenotificationbar.review.domain.Review;
 import samplenotificationbar.review.service.ReviewService;
 import samplenotificationbar.user.service.UserService;
+import viper.core.viewutil.JSONView;
 
 /**
  *
@@ -57,12 +59,13 @@ public class ReviewsController {
         
     }
     @RequestMapping("/getRecentReviews.htm")
-    public void getRecentReviews(@RequestParam("productId") Integer productId ,HttpServletRequest request,HttpServletResponse response){
+    public ModelAndView getRecentReviews(@RequestParam("productId") Integer productId ,HttpServletRequest request,HttpServletResponse response){
         
         List<Review> reviews = productService.getRevList();
         for(Review review : reviews){
             System.out.println("New Review from : "+ review.getUser().getName()+" \nOn Product: "+ review.getProduct().getName() + " \nWith comment: "+review.getComment());
         }
+        return new ModelAndView(new JSONView(reviews));
         
     }
     
