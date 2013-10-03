@@ -102,7 +102,7 @@ public class Review {
     }
 
     @ForeignKey(name = "product_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = true)
     public Product getProduct() {
         return this.product;
