@@ -11,6 +11,7 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import samplenotificationbar.review.dao.ReviewDao;
 import samplenotificationbar.review.domain.Review;
 import samplenotificationbar.review.event.AddReviewEvent;
@@ -58,6 +59,7 @@ public class ReviewServiceImp implements ApplicationListener<GetReviewEvent>, Ap
     }
 
     @Override
+    @Transactional
     public void saveReview(Review review) {
         reviewDao.save(review);
         reviews.add(review);
