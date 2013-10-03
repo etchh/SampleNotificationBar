@@ -4,8 +4,8 @@
  */
 package samplenotificationbar.review.controller;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,11 +61,9 @@ public class ReviewsController {
     @RequestMapping("/getRecentReviews.htm")
     public ModelAndView getRecentReviews(@RequestParam("productId") Integer productId ,HttpServletRequest request,HttpServletResponse response){
         
-        List<Review> reviews = productService.getRevList();
-        for(Review review : reviews){
-            System.out.println("New Review from : "+ review.getUser().getName()+" \nOn Product: "+ review.getProduct().getName() + " \nWith comment: "+review.getComment());
-        }
-        return new ModelAndView(new JSONView(reviews));
+        
+        
+        return new ModelAndView(new JSONView((productService.getRecentReviews(productId) == null)?new ArrayList<Review>():productService.getRecentReviews(productId)));
         
     }
     
