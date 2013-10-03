@@ -12,10 +12,10 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import samplenotificationbar.product.event.GetReviewEvent;
 import samplenotificationbar.review.dao.ReviewDao;
 import samplenotificationbar.review.domain.Review;
 import samplenotificationbar.review.event.AddReviewEvent;
-import samplenotificationbar.review.event.GetReviewEvent;
 import samplenotificationbar.review.service.ReviewService;
 import samplenotificationbar.user.service.UserService;
 
@@ -29,8 +29,10 @@ public class ReviewServiceImp implements ApplicationListener<GetReviewEvent>, Ap
     ReviewDao reviewDao;
     ApplicationEventPublisher applicationEventPublisher;
     UserService userService;
-    private List reviews = new ArrayList();
-
+    private ArrayList<Review> reviews = new ArrayList<Review>();
+    
+    
+    
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -69,14 +71,12 @@ public class ReviewServiceImp implements ApplicationListener<GetReviewEvent>, Ap
 
 
     }
-    
+
 
     public void publishAddReviewEvent() {
         this.applicationEventPublisher.publishEvent(new AddReviewEvent(this, this.getClass()));
     }
-    public void publishGetReviewEvent() {
-        this.applicationEventPublisher.publishEvent(new GetReviewEvent(this, this.getClass()));
-    }
+   
 
     @Override
     public Review getReview(Integer reviewId) {
@@ -89,13 +89,10 @@ public class ReviewServiceImp implements ApplicationListener<GetReviewEvent>, Ap
         reviews.clear();
     }
 
-    @Override
-    public List getRecentReviews() {
-        List revList = new ArrayList();;
-        for(Object r : reviews){
-            revList.add((Review)r);
-        }
-        this.publishGetReviewEvent();
-        return revList;
-    }
+    
+    
+    
+
+
+    
 }

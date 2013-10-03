@@ -4,8 +4,10 @@
  */
 package samplenotificationbar.product.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import samplenotificationbar.product.domain.Product;
+import samplenotificationbar.review.domain.Review;
 
 /**
  *
@@ -15,5 +17,6 @@ public interface ProductService {
     public Product getProduct(Integer productId);
     
     public List<Product> getAllProducts();
+    public ArrayList<Review> getRevList();
     
 }

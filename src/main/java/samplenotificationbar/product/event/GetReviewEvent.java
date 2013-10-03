@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package samplenotificationbar.review.event;
+package samplenotificationbar.product.event;
 
 import org.springframework.context.ApplicationEvent;
 
@@ -28,5 +28,5 @@ public class GetReviewEvent extends ApplicationEvent{
 		builder.append("GetReviewEvent [class=").append(event.getSimpleName()).append("]");
 		return builder.toString();
 	}
-
+        
 }

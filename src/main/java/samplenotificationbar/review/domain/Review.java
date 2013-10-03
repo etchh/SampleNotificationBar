@@ -92,7 +92,7 @@ public class Review {
     }
 
     @Column(name = "comment_date", nullable = false)
-    @Temporal(javax.persistence.TemporalType.DATE)
+    @Temporal(javax.persistence.TemporalType.TIMESTAMP)
     public Date getCommentDate() {
         return commentDate;
     }
@@ -102,7 +102,7 @@ public class Review {
     }
 
     @ForeignKey(name = "product_id")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id", nullable = true)
     public Product getProduct() {
         return this.product;

@@ -57,9 +57,9 @@ public class ReviewsController {
         
     }
     @RequestMapping("/getRecentReviews.htm")
-    public void getRecentReviews(HttpServletRequest request,HttpServletResponse response){
+    public void getRecentReviews(@RequestParam("productId") Integer productId ,HttpServletRequest request,HttpServletResponse response){
         
-        List<Review> reviews = reviewService.getRecentReviews();
+        List<Review> reviews = productService.getRevList();
         for(Review review : reviews){
             System.out.println("New Review from : "+ review.getUser().getName()+" \nOn Product: "+ review.getProduct().getName() + " \nWith comment: "+review.getComment());
         }
