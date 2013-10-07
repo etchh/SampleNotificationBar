@@ -109,11 +109,11 @@
                                     (month < 10 ? '0' : '') + month + ',' +
                                     (day < 10 ? '0' : '') + day;
 //                        $('#afterReview').addClass('comment-box');
-                            $('.comment-box').prepend(" \n\
-                                        <div class='comment'>          \n\
-                                        <strong>${user.email}</strong> <span>" + outputDate + "</span><p>" + text + "</p>     \n\
-                                                  </div> <div class='clearfix'></div>                   "
-                                    );
+//                            $('.comment-box').prepend(" \n\
+//                                        <div class='comment'>          \n\
+//                                        <strong>${user.email}</strong> <span>" + outputDate + "</span><p>" + text + "</p>     \n\
+//                                                  </div> <div class='clearfix'></div>                   "
+//                                    );
 
 
                         })
@@ -129,6 +129,16 @@
                                 {productId:${product.productId} },
                         function(result) {
 //                            jalert("Reviewed ajax successfully ");
+                            for(var i = 0 ;i<result.length;i++){
+                                    
+                                    $('.comment-box').prepend(" \n\
+                                        <div class='comment'>          \n\
+                                        <strong>"+result[i].user.email+"</strong> <span>" + result[i].formatedDate + "</span><p>" + result[i].comment + "</p>     \n\
+                                                  </div> <div class='clearfix'></div>                   "
+                                    );
+        
+                                }
+                            
                            
 
 
