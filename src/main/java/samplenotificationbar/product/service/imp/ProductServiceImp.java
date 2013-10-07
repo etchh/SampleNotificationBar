@@ -17,6 +17,7 @@ import samplenotificationbar.product.domain.Product;
 import samplenotificationbar.product.event.GetReviewEvent;
 import samplenotificationbar.product.service.ProductService;
 import samplenotificationbar.review.domain.Review;
+import samplenotificationbar.user.service.UserService;
 
 /**
  *
@@ -26,10 +27,19 @@ import samplenotificationbar.review.domain.Review;
 public class ProductServiceImp implements ApplicationListener<GetReviewEvent>, ApplicationEventPublisherAware, ProductService {
 
     ProductDao productDao;
+    UserService userService;
     ApplicationEventPublisher applicationEventPublisher;
     HashMap<Integer, ArrayList<Review>> reviews = new HashMap<Integer, ArrayList<Review>>();
-    ArrayList<Review> revList = new ArrayList<Review>();
+    ArrayList<Review> revList ;
+    Product product;
 
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    
+    
     @Override
     public HashMap<Integer, ArrayList<Review>> getReviews() {
         return reviews;
@@ -65,20 +75,25 @@ public class ProductServiceImp implements ApplicationListener<GetReviewEvent>, A
     public void onApplicationEvent(GetReviewEvent e) {
         if(revList != null ) {
             revList.clear();
+            reviews.remove(product.getProductId());
+            product = null;
         }
-        
+        System.out.println("in productService !");
 
-        
+
+
     }
 
     @Override
     public ArrayList<Review> getRecentReviews(Integer productId) {
-        revList = reviews.remove(productId);
+        this.product = productDao.get(productId);
+        revList = (reviews.get(productId) == null ) ? null : (ArrayList<Review>) reviews.get(productId).clone();
+        ArrayList<Review> newList = (revList == null ) ? null : (ArrayList<Review>) revList .clone();
         
-        ArrayList<Review> newList = ((revList == null )? new ArrayList<Review>():(ArrayList<Review>)revList.clone());
-        
+
+//        ArrayList<Review> newList = reviews.remove(productId);
         this.publishGetReviewEvent();
-        
+//        reviews.remove(this);
         return newList;
     }
 

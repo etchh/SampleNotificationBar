@@ -61,9 +61,9 @@ public class ReviewsController {
     @RequestMapping("/getRecentReviews.htm")
     public ModelAndView getRecentReviews(@RequestParam("productId") Integer productId ,HttpServletRequest request,HttpServletResponse response){
         
+        ArrayList<Review> result = productService.getRecentReviews(productId);
         
-        
-        return new ModelAndView(new JSONView((productService.getRecentReviews(productId) == null)?new ArrayList<Review>():productService.getRecentReviews(productId)));
+        return new ModelAndView(new JSONView((result == null)?new ArrayList<Review>():result));
         
     }
     

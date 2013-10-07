@@ -4,25 +4,55 @@
  */
 package samplenotificationbar.user.service.imp;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
-import samplenotificationbar.review.event.AddReviewEvent;
+import samplenotificationbar.product.event.GetReviewEvent;
+import samplenotificationbar.product.service.ProductService;
+import samplenotificationbar.review.domain.Review;
+import samplenotificationbar.review.service.ReviewService;
 import samplenotificationbar.user.dao.UserDao;
 import samplenotificationbar.user.domain.User;
 import samplenotificationbar.user.service.UserService;
-
 
 /**
  *
  * @author mostafa
  */
 @Service("userService")
-public class UserServiceImp implements UserService, ApplicationListener<AddReviewEvent> {
+public class UserServiceImp implements UserService , ApplicationListener<GetReviewEvent>{
 
     UserDao userDao;
+    ProductService productService;
+    ReviewService reviewService;
+    HashMap<Integer , ArrayList<Review>> reviews = new HashMap<Integer , ArrayList<Review>>();
+    ArrayList<Review> userReviews = new ArrayList<Review>();
 
+    public HashMap<Integer, ArrayList<Review>> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(HashMap<Integer, ArrayList<Review>> reviews) {
+        this.reviews = reviews;
+    }
+    
+    @Autowired
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
+    }
+
+    @Autowired
+    public void setReviewService(ReviewService reviewService) {
+        this.reviewService = reviewService;
+    }
+    
+    
+    
     @Autowired
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
@@ -38,12 +68,25 @@ public class UserServiceImp implements UserService, ApplicationListener<AddRevie
         return userDao.get(userId);
     }
 
-    @Override
-    public void onApplicationEvent(AddReviewEvent e) {
-        for (int i = 0; i < 10; i++) {
-            System.out.println("I added a review , HAHAHAHAHAAH");
-        }
+    public void onApplicationEvent(GetReviewEvent e ) {
+        
 
     }
+
+    @Override
+    public void setUserProductReviews(Integer productId , Integer userId , HashMap<Integer, ArrayList<Review>> reviews) {
+        for(Review rev : reviews.get(productId)){
+            if(rev.getUser().getUserId().equals(userId)){
+                reviews.put(productId , reviews.get(productId));
+            }
+        }
+    }
+
+    @Override
+    public ArrayList<Review> getUserProductReviews(Integer productId ) {
+        return this.reviews.get(productId);
+    }
+
+    
 
 }

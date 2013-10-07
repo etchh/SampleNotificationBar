@@ -13,7 +13,6 @@ import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import samplenotificationbar.product.event.GetReviewEvent;
 import samplenotificationbar.product.service.ProductService;
 import samplenotificationbar.review.dao.ReviewDao;
 import samplenotificationbar.review.domain.Review;
@@ -26,13 +25,14 @@ import samplenotificationbar.user.service.UserService;
  * @author mostafa
  */
 @Service("reviewService")
-public class ReviewServiceImp implements ApplicationListener<GetReviewEvent>, ApplicationEventPublisherAware, ReviewService {
+public class ReviewServiceImp implements ApplicationListener<AddReviewEvent>, ApplicationEventPublisherAware, ReviewService {
 
     ReviewDao reviewDao;
     ApplicationEventPublisher applicationEventPublisher;
     UserService userService;
     ProductService productService;
-    private ArrayList<Review> reviews = new ArrayList<Review>();
+    private ArrayList<Review> revList = new ArrayList<Review>();
+    private HashMap<Integer, ArrayList<Review>> reviews = new HashMap<Integer, ArrayList<Review>>();
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -70,31 +70,49 @@ public class ReviewServiceImp implements ApplicationListener<GetReviewEvent>, Ap
     @Transactional
     public void saveReview(Review review) {
         reviewDao.save(review);
-        reviews.add(review);
+        revList.add(review);
 
-        if (productService.getReviews() == null || productService.getReviews().isEmpty()) {
-            HashMap x = new HashMap<Integer, ArrayList<Review>>();
+//        if (productService.getReviews() == null || productService.getReviews().isEmpty()) {
+//            HashMap x = new HashMap<Integer, ArrayList<Review>>();
+//            ArrayList<Review> y = new ArrayList<Review>();
+//            y.add(review);
+//            x.put(review.getProduct().getProductId(), y);
+//            System.out.println("new HashMap has been created , with product id = "+review.getProduct().getProductId());
+//            productService.setReviews(x);
+//        } else {
+//            if (productService.getReviews().get(review.getProduct().getProductId()) == null ||productService.getReviews().get(review.getProduct().getProductId()).isEmpty() ) {
+//                ArrayList<Review> y = new ArrayList<Review>();
+//                y.add(review);
+//                System.out.println("new ArrayList has been created");
+//                productService.getReviews().put(review.getProduct().getProductId(), y);
+//            } else {
+//                System.out.println("HashMap already created");
+//                ArrayList<Review> old = productService.getReviews().get(review.getProduct().getProductId());
+//                old.add(review);
+//                productService.getReviews().put(review.getProduct().getProductId(),old );
+//            }
+//
+//        }
+        if (reviews.isEmpty()) {
             ArrayList<Review> y = new ArrayList<Review>();
             y.add(review);
-            x.put(review.getProduct().getProductId(), y);
-            productService.setReviews(x);
+            reviews.put(review.getProduct().getProductId(), y);
+            
         } else {
-            if (productService.getReviews().get(review.getProduct().getProductId()) == null ||productService.getReviews().get(review.getProduct().getProductId()).isEmpty() ) {
-                ArrayList<Review> y = new ArrayList<Review>();
-                y.add(review);
-                productService.getReviews().put(review.getProduct().getProductId(), y);
-            } else {
-                productService.getReviews().get(review.getProduct().getProductId()).add(review);
+            if (reviews.get(review.getProduct().getProductId()) != null) {
+                ArrayList<Review> productReviewList = reviews.get(review.getProduct().getProductId());
+                productReviewList.add(review);
+                reviews.put(review.getProduct().getProductId(), productReviewList);
             }
 
         }
-
+        productService.setReviews(reviews);
+        for(Review rev : productService.getReviews().get(review.getProduct().getProductId())){
+            System.out.println("before publish" + "\n  user: "+rev.getUser() +"  ,  comment: " + rev.getComment() + "   , product name: " + rev.getProduct().getName());
+        }
+        
 
         this.publishAddReviewEvent();
-
-
-
-
     }
 
     public void publishAddReviewEvent() {
@@ -107,7 +125,9 @@ public class ReviewServiceImp implements ApplicationListener<GetReviewEvent>, Ap
     }
 
     @Override
-    public void onApplicationEvent(GetReviewEvent e) {
+    public void onApplicationEvent(AddReviewEvent e) {
         System.out.println("added new review!");
     }
+
+    
 }
