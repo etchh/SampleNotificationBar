@@ -92,30 +92,37 @@ public class ProductServiceImp implements ApplicationListener<GetReviewEvent>, A
     @Override
     public void onApplicationEvent(GetReviewEvent e) {
 
-        if (revList != null && updatedUsers.get(user.getUserId()) != null && updatedUsers.get(user.getUserId()).getStatus().equals(User.Status.NOT_UPDATED)) {
+        if (updatedUsers != null && user != null) {
+            for (User u : updatedUsers) {
+                if (!updatedUsers.contains((User) u)) {
+                    u.setStatus(User.Status.UPDATED);
+                    updatedUsers.add(u);
+                    
+                    break;
+                } 
+                if (u.equals(user)) {
 
-            User u = updatedUsers.get(user.getUserId());
-            u.setStatus(User.Status.UPDATED);
-            updatedUsers.remove(user);
-            updatedUsers.add(u);
 
-        } else {
-            if (updatedUsers.get(user.getUserId()).getStatus().equals(User.Status.NOT_UPDATED)) {
-                User u = updatedUsers.get(user.getUserId());
-                u.setStatus(User.Status.UPDATED);
-                updatedUsers.remove(user);
-                updatedUsers.add(u);
-            } else {
-                revList = null;
-                user = null;
-                product = null;
+                    if (revList != null && u.getStatus().equals(User.Status.NOT_UPDATED)) {
+
+                        u.setStatus(User.Status.UPDATED);
+                    } else if (u.getStatus().equals(User.Status.NOT_UPDATED)) {
+                        u.setStatus(User.Status.UPDATED);
+
+                    } else if (u.getStatus().equals(User.Status.UPDATED)) {
+                        revList = null;
+                    }
+                }
             }
 
+        } else {
+            updatedUsers = new ArrayList<User>();
+            user.setStatus(User.Status.UPDATED);
+            updatedUsers.add(user);
         }
+        user = null;
+        product = null;
         System.out.println("in productService !");
-
-
-
     }
 
     @Override
@@ -132,9 +139,10 @@ public class ProductServiceImp implements ApplicationListener<GetReviewEvent>, A
         this.product = productDao.get(productId);
         this.user = userDao.get(userId);
 
-        this.publishGetReviewEvent();
+
         revList = (reviews.get(productId) == null) ? null : (ArrayList<Review>) reviews.get(productId).clone();
         ArrayList<Review> newList = (revList == null) ? null : (ArrayList<Review>) revList.clone();
+        this.publishGetReviewEvent();
 
         return revList;
     }

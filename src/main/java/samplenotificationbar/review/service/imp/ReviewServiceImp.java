@@ -111,17 +111,18 @@ public class ReviewServiceImp implements ApplicationListener<AddReviewEvent>, Ap
         productService.setReviews(reviews);
         if(productService.getUpdatedUsers() == null){
             productService.setUpdatedUsers(new ArrayList<User>());
-            review.getUser().setStatus(User.Status.NOT_UPDATED);
-            productService.getUpdatedUsers().add(review.getUser());
+            User u = review.getUser();
+            u.setStatus(User.Status.NOT_UPDATED);
+            productService.getUpdatedUsers().add(u);
         }else{
             for(User u : productService.getUpdatedUsers()){
                 u.setStatus(User.Status.NOT_UPDATED);
             }
         }
         
-        for(Review rev : productService.getReviews().get(review.getProduct().getProductId())){
-            System.out.println("before publish" + "\n  user: "+rev.getUser() +"  ,  comment: " + rev.getComment() + "   , product name: " + rev.getProduct().getName());
-        }
+//        for(Review rev : productService.getReviews().get(review.getProduct().getProductId())){
+//            System.out.println("before publish" + "\n  user: "+rev.getUser() +"  ,  comment: " + rev.getComment() + "   , product name: " + rev.getProduct().getName());
+//        }
         
 
         this.publishAddReviewEvent();

@@ -124,29 +124,29 @@
                 });
 
 
-                setInterval(function() {
-                    $.getJSON("/reviews/getRecentReviews.htm",
-                                {productId:${product.productId} },
-                        function(result) {
-//                            jalert("Reviewed ajax successfully ");
-                            for(var i = 0 ;i<result.length;i++){
-                                    
-                                    $('.comment-box').prepend(" \n\
-                                        <div class='comment'>          \n\
-                                        <strong>"+result[i].user.email+"</strong> <span>" + result[i].formatedDate + "</span><p>" + result[i].comment + "</p>     \n\
-                                                  </div> <div class='clearfix'></div>                   "
-                                    );
-        
-                                }
-                            
-                           
-
-
-                        })
-                                .error(function(XMLHttpRequest, textStatus, errorThrown) {
-                            jalert("Something went wrong. please try again.");
-                        })
-                }, 10000);
+//                setInterval(function() {
+//                    $.getJSON("/reviews/getRecentReviews.htm",
+//                                {productId:${product.productId} },
+//                        function(result) {
+////                            jalert("Reviewed ajax successfully ");
+//                            for(var i = 0 ;i<result.length;i++){
+//                                    
+//                                    $('.comment-box').prepend(" \n\
+                                        
+                                       
+                                                 
+//                                    );
+//        
+//                                }
+//                            
+//                           
+//
+//
+//                        })
+//                                .error(function(XMLHttpRequest, textStatus, errorThrown) {
+//                            jalert("Something went wrong. please try again.");
+//                        })
+//                }, 10000);
 
 
             });
