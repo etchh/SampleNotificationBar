@@ -37,10 +37,15 @@ public class ProductServiceImp implements ApplicationListener<GetReviewEvent>, A
     Product product;
     ArrayList<User> updatedUsers;
     User user;
-    
+
     @Override
     public ArrayList<User> getUpdatedUsers() {
         return updatedUsers;
+    }
+
+    @Override
+    public void setUpdatedUsers(ArrayList<User> updatedUsers) {
+        this.updatedUsers = updatedUsers;
     }
 
     @Autowired
@@ -86,21 +91,25 @@ public class ProductServiceImp implements ApplicationListener<GetReviewEvent>, A
 
     @Override
     public void onApplicationEvent(GetReviewEvent e) {
-        if (revList != null && updatedUsers.get(user.getUserId()) != null) {
 
+        if (revList != null && updatedUsers.get(user.getUserId()) != null && updatedUsers.get(user.getUserId()).getStatus().equals(User.Status.NOT_UPDATED)) {
 
-            if (user != null && updatedUsers.contains(user)) {
-                product = null;
-                revList.clear();
-                user = null;
+            User u = updatedUsers.get(user.getUserId());
+            u.setStatus(User.Status.UPDATED);
+            updatedUsers.remove(user);
+            updatedUsers.add(u);
+
+        } else {
+            if (updatedUsers.get(user.getUserId()).getStatus().equals(User.Status.NOT_UPDATED)) {
+                User u = updatedUsers.get(user.getUserId());
+                u.setStatus(User.Status.UPDATED);
+                updatedUsers.remove(user);
+                updatedUsers.add(u);
             } else {
-
-                updatedUsers.add(user);
-                product = null;
+                revList = null;
                 user = null;
-
+                product = null;
             }
-
 
         }
         System.out.println("in productService !");

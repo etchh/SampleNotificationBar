@@ -30,6 +30,7 @@ public interface ProductService {
     
     public ArrayList<User> getUpdatedUsers();
     
+    public void setUpdatedUsers(ArrayList<User> updatedUsers);
     
     
     

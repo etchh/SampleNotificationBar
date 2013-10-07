@@ -18,6 +18,7 @@ import samplenotificationbar.review.dao.ReviewDao;
 import samplenotificationbar.review.domain.Review;
 import samplenotificationbar.review.event.AddReviewEvent;
 import samplenotificationbar.review.service.ReviewService;
+import samplenotificationbar.user.domain.User;
 import samplenotificationbar.user.service.UserService;
 
 /**
@@ -33,6 +34,7 @@ public class ReviewServiceImp implements ApplicationListener<AddReviewEvent>, Ap
     ProductService productService;
     private ArrayList<Review> revList = new ArrayList<Review>();
     private HashMap<Integer, ArrayList<Review>> reviews = new HashMap<Integer, ArrayList<Review>>();
+    
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -107,6 +109,16 @@ public class ReviewServiceImp implements ApplicationListener<AddReviewEvent>, Ap
 
         }
         productService.setReviews(reviews);
+        if(productService.getUpdatedUsers() == null){
+            productService.setUpdatedUsers(new ArrayList<User>());
+            review.getUser().setStatus(User.Status.NOT_UPDATED);
+            productService.getUpdatedUsers().add(review.getUser());
+        }else{
+            for(User u : productService.getUpdatedUsers()){
+                u.setStatus(User.Status.NOT_UPDATED);
+            }
+        }
+        
         for(Review rev : productService.getReviews().get(review.getProduct().getProductId())){
             System.out.println("before publish" + "\n  user: "+rev.getUser() +"  ,  comment: " + rev.getComment() + "   , product name: " + rev.getProduct().getName());
         }
@@ -128,6 +140,8 @@ public class ReviewServiceImp implements ApplicationListener<AddReviewEvent>, Ap
     public void onApplicationEvent(AddReviewEvent e) {
         System.out.println("added new review!");
     }
+    
+    
 
     
 }

@@ -16,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import org.hibernate.annotations.ForeignKey;
 import samplenotificationbar.review.domain.Review;
 
@@ -31,7 +32,26 @@ public class User {
     String name;
     String email;
     Set<Review> reviews = new HashSet<Review>();
-    
+    private Status status;
+
+    /**
+     * @return the status
+     */
+    @Transient
+    public Status getStatus() {
+        return status;
+    }
+
+    /**
+     * @param status the status to set
+     */
+    public void setStatus(Status status) {
+        this.status = status;
+    }
+    public static enum Status {
+        UPDATED,
+        NOT_UPDATED
+    }
     public User(){
         
     }

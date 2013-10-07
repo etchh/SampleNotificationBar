@@ -5,9 +5,7 @@
 package samplenotificationbar.user.service.imp;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationListener;
@@ -32,6 +30,7 @@ public class UserServiceImp implements UserService , ApplicationListener<GetRevi
     ReviewService reviewService;
     HashMap<Integer , ArrayList<Review>> reviews = new HashMap<Integer , ArrayList<Review>>();
     ArrayList<Review> userReviews = new ArrayList<Review>();
+    
 
     public HashMap<Integer, ArrayList<Review>> getReviews() {
         return reviews;
