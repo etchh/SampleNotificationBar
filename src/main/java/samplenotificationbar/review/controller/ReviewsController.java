@@ -66,6 +66,14 @@ public class ReviewsController {
         return new ModelAndView(new JSONView((result == null)?new ArrayList<Review>():result));
         
     }
+    @RequestMapping("/getMyRecentReviews.htm")
+    public ModelAndView getMyRecentReviews(@RequestParam("productId") Integer productId ,@RequestParam("userId") Integer userId,HttpServletRequest request,HttpServletResponse response){
+        
+        ArrayList<Review> result = productService.getAllRecentReviews(productId,userId);
+        
+        return new ModelAndView(new JSONView((result == null)?new ArrayList<Review>():result));
+        
+    }
     
     
 }

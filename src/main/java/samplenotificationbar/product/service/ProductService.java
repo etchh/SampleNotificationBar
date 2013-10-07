@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import samplenotificationbar.product.domain.Product;
 import samplenotificationbar.review.domain.Review;
+import samplenotificationbar.user.domain.User;
 
 /**
  *
@@ -24,6 +25,11 @@ public interface ProductService {
     
     public ArrayList<Review> getRecentReviews(Integer productId);
     public void setReviews(HashMap<Integer, ArrayList<Review>> reviews);
+    
+    public ArrayList<Review> getAllRecentReviews(Integer productId,Integer userId);
+    
+    public ArrayList<User> getUpdatedUsers();
+    
     
     
     
