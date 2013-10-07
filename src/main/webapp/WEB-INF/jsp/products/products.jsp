@@ -125,8 +125,18 @@
 
 
                 setInterval(function() {
-                   
-                }, 2000);
+                    $.getJSON("/reviews/getRecentReviews.htm",
+                                {productId:${product.productId} },
+                        function(result) {
+//                            jalert("Reviewed ajax successfully ");
+                           
+
+
+                        })
+                                .error(function(XMLHttpRequest, textStatus, errorThrown) {
+                            jalert("Something went wrong. please try again.");
+                        })
+                }, 10000);
 
 
             });
